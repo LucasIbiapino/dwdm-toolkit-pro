@@ -7,7 +7,7 @@
 
 O **DWDM Toolkit Pro** é uma ferramenta "Canivete Suíço" interativa e totalmente offline, desenvolvida para engenheiros de telecomunicações, analistas de rede e técnicos de campo. A ferramenta centraliza os cálculos mais complexos de redes ópticas DWDM (Dense Wavelength Division Multiplexing) em uma única interface rápida e intuitiva.
 
-🔗 **[Acessar a Ferramenta Online](https://lucasibiapino.github.io/dwdm-toolkit-pro/)** *(Nota: Substitua o '#' pelo link gerado pelo seu GitHub Pages)*
+🔗 **[Acessar a Ferramenta Online](https://lucasibiapino.github.io/dwdm-toolkit-pro/)**
 
 ---
 
