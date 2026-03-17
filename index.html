@@ -27,6 +27,15 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
+    /* Estilos Dark Mode Avançado */
+    .dark .glass-effect { background: rgba(30, 41, 59, 0.7); border-color: rgba(51, 65, 85, 0.5); }
+    .dark .text-slate-900 { color: #f8fafc; }
+    .dark .text-slate-800 { color: #e2e8f0; }
+    .dark .text-slate-700 { color: #cbd5e1; }
+    .dark .text-slate-500 { color: #94a3b8; }
+    .dark .bg-white { background-color: #0f172a; border-color: #1e293b; }
+    .dark .bg-slate-50 { background-color: #020617; }
+    
     /* Vue Transitions */
     .slide-fade-enter-active { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
     .slide-fade-leave-active { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: absolute; width:100%; }
@@ -39,6 +48,11 @@
     input[type=number]::-webkit-outer-spin-button { 
       -webkit-appearance: none; margin: 0; 
     }
+    
+    /* Ocultar barra de rolagem no menu de abas responsivo */
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
     /* Estilo para as caixas de fórmula */
     .formula-box {
       font-family: monospace;
@@ -82,7 +96,7 @@
       </div>
     </header>
 
-    <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 dark:border-slate-700 pb-3">
+    <div class="flex gap-2 mb-6 border-b border-slate-200 dark:border-slate-700 pb-3 overflow-x-auto scrollbar-hide w-full">
       <button @click="activeTab = 'atenuacao'" :class="tabClass('atenuacao')"><i class="fa-solid fa-arrow-right"></i> Atenuação</button>
       <button @click="activeTab = 'emendas'" :class="tabClass('emendas')"><i class="fa-solid fa-plug"></i> Emendas</button>
       <button @click="activeTab = 'potencia'" :class="tabClass('potencia')"><i class="fa-solid fa-bolt"></i> Potência</button>
@@ -108,7 +122,7 @@
         <div class="mb-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50 p-5 rounded-xl">
           <h3 class="font-bold text-blue-800 dark:text-blue-300 mb-4 flex items-center gap-2"><i class="fa-solid fa-book-open"></i> Dicionário: Conceitos de Atenuação</h3>
           <div class="grid md:grid-cols-2 gap-x-6 gap-y-3 text-sm text-slate-700 dark:text-slate-300">
-            <p><strong class="text-blue-900 dark:text-blue-200">Atenuação da Fibra (dB/km):</strong> Perda natural de força do sinal. Valor típico G.652 é ~0.22 dB/km em 1550nm.</p>
+            <p><strong class="text-blue-900 dark:text-blue-200">Atenuação da Fibra (dB/km):</strong> Perda natural de força do sinal óptico ao longo da fibra. Valor típico G.652 é ~0.22 dB/km em 1550nm.</p>
             <p><strong class="text-blue-900 dark:text-blue-200">Perdas Extras:</strong> Atenuações localizadas. Típico: 0.1 dB por emenda e 0.5 dB por conector/patchcord.</p>
             <p><strong class="text-blue-900 dark:text-blue-200">Atenuação Total:</strong> A soma de todas as perdas do trecho físico do enlace. Fundamental para dimensionar os amplificadores.</p>
           </div>
@@ -432,7 +446,7 @@
                  <span class="font-medium mb-2" :class="statusCascataOsnr.textClass">OSNR Efetiva Receptada</span>
                  <div class="text-5xl font-bold mb-1" :class="statusCascataOsnr.valClass">{{ cascataOsnrEfetiva }} <span class="text-2xl">dB</span></div>
                  <div class="text-xs font-bold px-2 py-1 rounded mt-2" :class="statusCascataOsnr.badgeClass">{{statusCascataOsnr.msg}}</div>
-                 <div class="formula-box bg-white/50 dark:bg-black/20 text-xs opacity-70 mt-2 border-none">1/OSNR_tot = Σ(1/OSNR_i)</div>
+                 <div class="formula-box bg-white/50 dark:bg-black/20 text-slate-700 dark:text-slate-300 text-xs opacity-70 mt-2 border-none">1/OSNR_tot = Σ(1/OSNR_i)</div>
                </div>
             </div>
             
@@ -1105,7 +1119,7 @@
           this.getReportData().forEach(s => { d.autoTable({ startY: y, head: [[s.title, 'Valor']], body: s.data }); y = d.lastAutoTable.finalY + 10; });
           d.save("Relatorio.pdf");
         },
-        tabClass(t) { return 'flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all ' + (this.activeTab === t ? 'bg-blue-600 dark:bg-amber-500 text-white dark:text-slate-900 shadow-md transform scale-105' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'); },
+        tabClass(t) { return 'flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all whitespace-nowrap shrink-0 ' + (this.activeTab === t ? 'bg-blue-600 dark:bg-amber-500 text-white dark:text-slate-900 shadow-md transform scale-105' : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'); },
         handleDBmChange(v) { this.valDBm = v; if(v===''){this.valMW='';return;} this.valMW = Math.pow(10, Number(v)/10).toFixed(4); },
         handleMWChange(v) { this.valMW = v; if(v===''||Number(v)<=0){this.valDBm='';return;} this.valDBm = (10*Math.log10(Number(v))).toFixed(2); },
         handleQDbChange(v) {
